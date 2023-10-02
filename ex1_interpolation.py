@@ -7,7 +7,7 @@ from pylie import SO3, SE3
 """Exercise 1 - Linear interpolation of poses on the manifold"""
 
 
-def interpolate_lie_element(alpha, X_1, X_2):
+def interpolate_lie_element(alpha, X_1: SE3, X_2: SE3):
     """Perform linear interpolation on the manifold
 
     :param alpha: A scalar interpolation factor in [0, 1]
@@ -16,7 +16,8 @@ def interpolate_lie_element(alpha, X_1, X_2):
     :return: The interpolated element
     """
     # TODO 1: Implement the interpolation (see Example 4.8 in the compendium for hints).
-    return X_1  # Mock implementation, do something else!
+    X = X_1 + alpha * (X_2 - X_1)
+    return X
 
 
 def main():
