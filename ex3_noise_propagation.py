@@ -18,7 +18,8 @@ def backproject(u, z, f, c):
     :return: A 3xn matrix of column vectors representing the backprojected points
     """
     # TODO 1: Implement backprojection.
-    return np.ones((3, u.shape[1]))  # Mock implementation, do something else!
+    x_c = z * np.vstack(((u - c) / f, np.ones((1, u.shape[1]))))
+    return x_c
 
 
 def main():
@@ -43,11 +44,15 @@ def main():
     var_z = 0.1 ** 2
 
     # TODO 2: Approximate the distribution of the 3D point in world coordinates:
+    x_c = backproject(mean_u, mean_z, f, c)
     # TODO 2: Propagate the expected point.
-    x_w = np.ones((3, 1))  # Mock implementation, do something else!
+    x_w = mean_T_w_c * x_c
 
     # TODO 2: Propagate the uncertainty.
-    cov_x_w = np.identity(3) # Mock implementation, do something else!
+    Jf_T_hat_wc = mean_T_w_c.jac_action_Xx_wrt_X(x_c)
+    Jf_u = mean_T_w_c.jac_action_Xx_wrt_x() @ np.array([[mean_z / f[0, 0], 0], [0, mean_z / f[1, 0]], [0, 0]])
+    Jf_z = mean_T_w_c.jac_action_Xx_wrt_x() @ backproject(mean_u, 1, f, c)
+    cov_x_w = Jf_T_hat_wc @ Sigma_T_w_c @ Jf_T_hat_wc.T + Jf_u @ Sigma_u @ Jf_u.T + Jf_z * var_z * Jf_z.T
     print(cov_x_w)
 
     # Simulate points from the true distribution.
