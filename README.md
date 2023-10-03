@@ -26,9 +26,10 @@ For hints, see Example 4.8 in the compendium.
 - Implement linear interpolation on the manifold (see TODO 1)
 - Play around with different poses and see how the interpolation is performed
 - Try extrapolating
+  - When extrapolating it seems to continue the "same kind" of movement it had between the known poses
 - Instead of interpolating on the pose manifold, try instead to interpolate the rotation and translation parts separately.
   How does this procedure compare to the full pose interpolation?
-  
+  - When they are considered seperatly, the traslation of the interpolated poses are more "direct", there is no "turn"
 
 ## Exercise 2 - Estimate the mean pose from a set of random poses
 We will here draw poses from a distribution, and try to recover the mean pose by estimating it on the manifold.
